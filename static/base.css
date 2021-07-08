@@ -1,0 +1,16 @@
+.shadow_header_logo {
+    margin:2rem 0;
+    font-family: 'Shadows Into Light', cursive;
+}
+
+.shadow_footer_logo{
+    margin: 1.5rem 0;
+    font-family: 'Shadows Into Light', cursive;
+}
+
+.pragmatic_header_button{
+    margin-bottom: 2rem
+}
+.pragmatic_footer_button{
+    margin-top:1.5rem
+}
