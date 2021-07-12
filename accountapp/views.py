@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
@@ -14,8 +14,10 @@ def hello_world(request):
         new_hello_world.text = temp
         new_hello_world.save()
 
-        return render(request, 'accountapp/hello_world.html/',
-                      context={'new_hello_world': new_hello_world})
+        from django.urls import reverse
+        return HttpResponseRedirect( reverse('accountapp:hello_world') )
+
     else:
+        hello_world_list = HelloWorld.objects.all()
         return render(request, 'accountapp/hello_world.html/',
-                      context={'text': 'GET METHOD!'})
+                      context={'hello_world_list': hello_world_list})
