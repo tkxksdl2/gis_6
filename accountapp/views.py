@@ -10,9 +10,11 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
+from accountapp.decorators import ownership_required
 from accountapp.forms import AccountCreationForm
 from accountapp.models import HelloWorld
 from django.urls import reverse
+
 
 @login_required(login_url=reverse_lazy('accountapp:login'))
 def hello_world(request):
@@ -24,8 +26,7 @@ def hello_world(request):
         new_hello_world.text = temp
         new_hello_world.save()
 
-
-        return HttpResponseRedirect( reverse('accountapp:hello_world') )
+        return HttpResponseRedirect(reverse('accountapp:hello_world'))
 
     else:
         hello_world_list = HelloWorld.objects.all()
@@ -39,13 +40,18 @@ class AccountCreateView(CreateView):
     success_url = reverse_lazy('accountapp:hello_world')
     template_name = 'accountapp/create.html'
 
+
 class AccountDetailView(DetailView):
     model = User
     context_object_name = 'target_user'
     template_name = 'accountapp/detail.html'
 
-@method_decorator(login_required, 'get')  #데코레이터를 메소드에사용할수 있도록 변환
-@method_decorator(login_required, 'post')
+
+ownership_method =[login_required, ownership_required]
+
+
+@method_decorator(ownership_method, 'get')  # 데코레이터를 메소드에사용할수 있도록 변환
+@method_decorator(ownership_method, 'post')
 class AccountUpdateView(UpdateView):
     model = User
     form_class = AccountCreationForm
@@ -53,8 +59,9 @@ class AccountUpdateView(UpdateView):
     success_url = reverse_lazy('accountapp:hello_world')
     template_name = 'accountapp/update.html'
 
-@method_decorator(login_required, 'get')  #데코레이터를 메소드에사용할수 있도록 변환
-@method_decorator(login_required, 'post')
+
+@method_decorator(ownership_method, 'get')  # 데코레이터를 메소드에사용할수 있도록 변환
+@method_decorator(ownership_method, 'post')
 class AccountDeleteView(DeleteView):
     model = User
     context_object_name = 'target_user'
