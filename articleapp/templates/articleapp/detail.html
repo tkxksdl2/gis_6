@@ -45,7 +45,13 @@
                     <div>
                         <span>
                             <img src="{{ comment.writer.profile.image.url }}" alt=""
-                                style="border-radius: 4rem;">
+                                style="
+                                height: 2rem;
+                                width: 2rem;
+                                border-radius: 20rem;
+                                object-fit: cover;
+                                margin: 0.5rem;
+                                border: solid slategrey">
                         </span>
                     <span style="font-size:1.4rem;
                                 margin-right: 1.1rem"
@@ -55,7 +61,16 @@
                     <span>{{ comment.created_at }}</span>
                     </div>
                     <p>{{ comment.content }}</p>
+
+                </div>{% if comment.writer == user %}
+                <div style="text-align: right">
+                    <a href="{% url 'commentapp:delete' pk=comment.pk %}"
+                       class="btn btn-danger rounded-pill px-5">
+                        Delete
+                    </a>
                 </div>
+                {% endif %}
+
                 </div>
             {% endfor %}
             {% include 'commentapp/create.html' %}
