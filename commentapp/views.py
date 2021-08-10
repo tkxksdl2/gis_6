@@ -31,7 +31,7 @@ class CommentCreateView(CreateView):
 @method_decorator(comment_ownership_required, 'post')
 class CommentDeleteView(DeleteView):
     model = Comment
-    context_object_name = 'target_content'
+    context_object_name = 'target_comment'
     template_name = 'commentapp/delete.html'
 
     def get_success_url(self):
