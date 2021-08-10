@@ -55,6 +55,7 @@
 }
 
 .comment_box {
+    text-align: left;
     border: solid darkgrey;
     padding: 1rem;
     border-radius: 1rem;
