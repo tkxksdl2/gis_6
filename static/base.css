@@ -71,3 +71,10 @@
     margin: 0.5rem;
     border: solid slategrey;
 }
+
+@media screen and (max-width:500px) {
+    html {
+        /* default font-size = 16px */
+        font-size: 11px;
+    }
+}
