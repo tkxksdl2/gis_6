@@ -9,11 +9,14 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic.list import MultipleObjectMixin
 
 from accountapp.decorators import ownership_required
 from accountapp.forms import AccountCreationForm
 from accountapp.models import HelloWorld
 from django.urls import reverse
+
+from articleapp.models import Article
 
 
 @login_required(login_url=reverse_lazy('accountapp:login'))
@@ -41,10 +44,16 @@ class AccountCreateView(CreateView):
     template_name = 'accountapp/create.html'
 
 
-class AccountDetailView(DetailView):
+class AccountDetailView(DetailView, MultipleObjectMixin):
     model = User
     context_object_name = 'target_user'
     template_name = 'accountapp/detail.html'
+
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        article_list = Article.objects.filter(writer=self.object)
+        return super().get_context_data(object_list=article_list, **kwargs)
 
 
 ownership_method =[login_required, ownership_required]
