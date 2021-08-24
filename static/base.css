@@ -78,3 +78,11 @@
         font-size: 11px;
     }
 }
+
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    color: black;
+}
