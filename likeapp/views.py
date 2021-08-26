@@ -23,8 +23,8 @@ def db_transaction(user, article):
 
     else:
         LikeRecord(user=user, article=article).save()
-        article.like += 1
-        article.save()
+    article.like += 1
+    article.save()
 
 
 @method_decorator(login_required, 'get')
