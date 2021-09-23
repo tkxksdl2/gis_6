@@ -14,13 +14,24 @@ services:
       - whalebro_media:/data/media/
 
   django:
-    image: whalebro:aws_3
+    image: whalebro:aws
     networks:
       - gis_network
     volumes:
      - whalebro_static:/home/gis_6/staticfiles/
      - whalebro_media:/home/gis_6/media/
 
+  mariadb:
+    image: mariadb:10.5
+    networks:
+      - gis_network
+    volumes:
+      - whalebro_mariadb:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: password1234
+      MARIADB_DATABASE: django
+      MARIADB_USER: django
+      MARIADB_PASSWORD: password1234
 
 networks:
   gis_network:
@@ -28,3 +39,4 @@ networks:
 volumes:
   whalebro_static:
   whalebro_media:
+  whalebro_mariadb:
