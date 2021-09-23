@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+
+  nginx:
+    image: nginx:1.19.5
+    ports:
+      - 80:80
+    networks:
+      - gis_network
+    volumes:
+      - /home/ubuntu/nginx.conf:/etc/nginx/nginx.conf
+      - whalebro_static:/data/static/
+      - whalebro_media:/data/media/
+
+  django:
+    image: whalebro:aws_3
+    networks:
+      - gis_network
+    volumes:
+     - whalebro_static:/home/gis_6/staticfiles/
+     - whalebro_media:/home/gis_6/media/
+
+
+networks:
+  gis_network:
+
+volumes:
+  whalebro_static:
+  whalebro_media:
